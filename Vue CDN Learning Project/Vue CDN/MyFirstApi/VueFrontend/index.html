@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My First Vue App</title>
+</head>
+
+<body>
+
+    <div id="app"> // only this code with works as we mount only this code with our vue...
+        <h1>{{ message }}</h1>
+
+        <button @click="changeMessage">
+            Click Me
+        </button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+
+        const { createApp } = Vue;
+
+        createApp({
+
+            data() {
+                return {
+                    message: "Hello Vue!"
+                };
+            },
+
+            methods: {
+                changeMessage() {
+                    this.message = "Hello Mayur!";
+                    // this.message == "Hello Mayur!" ? "Hello Vue!" : "Hello Mayur!";
+                }
+            }
+
+        }).mount("#app"); // this connect our vue with html...
+
+    </script>
+
+</body>
+</html>

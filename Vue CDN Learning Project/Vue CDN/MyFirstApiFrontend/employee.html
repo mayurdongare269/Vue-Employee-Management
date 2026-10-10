@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h1>Employee Management</h1>
+
+        <!-- CREATE EMPLOYEE FORM ....-->
+
+        <h2>Add Employee</h2>
+
+        <form @submit.prevent="createEmployee">
+
+            <input
+                type="text"
+                v-model="employee.name"
+                placeholder="Name"
+                required >
+
+            <br><br>
+
+            <input
+                type="email"
+                v-model="employee.emailAddress"
+                placeholder="Email"
+                required
+            >
+
+            <br><br>
+
+            <input
+                type="text"
+                v-model="employee.position"
+                placeholder="Position"
+                required
+            >
+
+            <br><br>
+
+            <input
+                type="text"
+                v-model="employee.department"
+                placeholder="Department"
+                required
+            >
+
+            <br><br>
+
+            <input
+                type="date"
+                v-model="employee.dob"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit"> {{ isEditing ? "Update Employee" : "Create Employee" }} </button>
+
+        </form>
+
+        <br>
+
+        <p>{{ message }}</p>
+
+
+        <hr>
+
+        <!-- GET ALL EMPLOYEES -->
+
+        <h2>Employees</h2>
+
+        <button @click="getEmployees">Load Employee</button>
+
+        <br><br>
+
+
+        <table border="1">
+
+            <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>DOB</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr
+                    v-for="employee in employees"
+                    :key="employee.id"
+                >
+
+                    <td>{{ employee.name }} </td>
+
+                    <td>{{ employee.emailAddress }}</td>
+
+                    <td>{{ employee.position }}</td>
+
+                    <td>{{ employee.department }}</td>
+
+                    <td> {{ employee.dob }}</td>
+
+                    <td>
+                        <button @click="editEmployee(employee)" > Edit </button>
+                        <button  @click="confirmDelete(employee.id)" > Delete </button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script src="js/employee.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<body>
+    <div id="app">
+        <h1>My Profile</h1>
+
+        <p>Windows User : <strong>{{userName}}</strong></p>
+
+        <p>Authenticated : <strong>{{isAuthenticated}}</strong></p>
+
+        <button @click="getCurrentUser">Get My Datails</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script src="js/user.js"></script>
+</body>
+</html>

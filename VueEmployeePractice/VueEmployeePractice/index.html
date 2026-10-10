@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Employee Management</title>
+
+    <!-- <link rel="stylesheet" href=./css/style.css">-->
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Load Vue Router for navigation between views -->
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+
+    <!-- Load reusable components before the views that use them  -->
+    <script src="js/components.js"></script>
+
+    <script src="js/dashboard-view.js"></script>
+    <script src="js/employee-view.js"></script>
+    <script src="js/about-view.js"></script>
+
+    <!-- main app at last, after all component are defined.. -->
+    <script src="js/app.js"></script>
+</body>
+</html>

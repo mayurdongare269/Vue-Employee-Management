@@ -1,0 +1,149 @@
+@MyFirstApi_HostAddress = http://localhost:5283
+
+GET {{MyFirstApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###Get emp
+GET {{MyFirstApi_HostAddress}}/api/Employee/GetAllEmployees/
+Accept: application/json
+
+###
+
+###Login
+POST {{MyFirstApi_HostAddress}}/api/Auth/Login/
+Content-Type: application/json
+
+{
+    "Email" : "m@gmail.com",
+    "Password": "1234"
+}
+
+###Login2
+POST {{MyFirstApi_HostAddress}}/api/Auth/Login/
+Content-Type: application/json
+
+{
+    "Email" : "m2@gmail.com",
+    "Password": "1234"
+}
+
+###Register
+POST {{MyFirstApi_HostAddress}}/api/Auth/Register/
+Content-Type: application/json
+
+{
+    "Email" : "m1@gmail.com",
+    "Password": "1234",
+    "Name": "Mayur2 Dongare"
+}
+
+###Register2
+POST {{MyFirstApi_HostAddress}}/api/Auth/Register/
+Content-Type: application/json
+
+{
+    "Email" : "m2@gmail.com",
+    "Password": "1234",
+    "Name": "Sagar"
+}
+
+
+
+###################EMPLOYEEE
+
+###Get emp
+GET {{MyFirstApi_HostAddress}}/api/Employee/GetAllEmployees/
+Accept: application/json
+
+
+###Get emp by ID
+GET {{MyFirstApi_HostAddress}}/api/Employee/GetEmployeeById/9676804A-F8EB-4A36-87A6-B2E5437A5584
+Accept: application/json
+
+###Get emp2 by ID
+GET {{MyFirstApi_HostAddress}}/api/Employee/GetEmployeeById/2110A533-2646-445C-8A70-F04F4913B88B
+Accept: application/json
+
+###Register2
+POST {{MyFirstApi_HostAddress}}/api/Employee/CreateEmployee/
+Content-Type: application/json
+
+{
+    
+  "Name": "Mahesh",
+  "DOB": "2005-06-01",
+  "Position": "SDE",
+  "Department": "CSE",
+  "EmailAddress": "mahesh@gmail.com"
+
+}
+
+###create emp 2
+POST {{MyFirstApi_HostAddress}}/api/Employee/CreateEmployee/
+Content-Type: application/json
+
+{
+    
+  "Name": "Vivek Rathod",
+  "DOB": "2002-06-01",
+  "Position": "Senior SDE",
+  "Department": "IT",
+  "EmailAddress": "vivekrathod@gmail.com"
+
+}
+
+###create emp 3
+POST {{MyFirstApi_HostAddress}}/api/Employee/CreateEmployee/
+Content-Type: application/json
+
+{
+    
+  "Name": "Abhishek",
+  "DOB": "2001-06-01",
+  "Position": "Senior SDE",
+  "Department": "Software",
+  "EmailAddress": "abhi@gmail.com"
+
+}
+
+###create emp 3
+POST {{MyFirstApi_HostAddress}}/api/Employee/CreateEmployee/
+Content-Type: application/json
+
+{
+    
+  "Name": "d",
+  "DOB": "2006-06-01",
+  "Position": "SDE",
+  "Department": "Entc",
+  "EmailAddress": "d@gmail.com"
+
+}
+
+
+###Update Emp
+PUT  {{MyFirstApi_HostAddress}}/api/Employee/UpdateEmployee/
+Content-Type: application/json
+
+{
+  
+  "Name": "Vivek Rathod",
+  "DOB": "2002-06-12",
+  "Position": "",
+  "Department": "",
+  "EmailAddress": "vivekrathod@gmail.com"
+
+}
+
+### Delete Emp
+# DELETE  {{MyFirstApi_HostAddress}}/api/Employee/DeleteEmployee?id=GUID
+DELETE  {{MyFirstApi_HostAddress}}/api/Employee/DeleteEmployee?id=69D60B40-6F31-4FB0-A4AC-65AA9D53D329
+
+########################  AUthentication (Windows)
+
+### get emp
+GET {{MyFirstApi_HostAddress}}/api/Employee/GetCurrentUser
+Accept: application/json
+
+
+# http://localhost:5283/api/Employee/GetCurrentUser

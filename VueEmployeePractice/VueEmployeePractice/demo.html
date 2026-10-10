@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <article class="employee-card">
+
+        <!-- Display employee details received through props... -->
+        <h3>{{employee.name}}</h3>
+        
+        <p>
+            <strong>Email: </strong>
+            {{employee.email}}
+        </p>
+
+        <p>
+            <strong>Department: </strong>
+            {{employee.department}}
+        </p>
+
+        <p>
+            <strong>Position: </strong>
+            {{employee.position}}
+        </p>
+
+        <div class="employee-action">
+
+            <!-- Send the employee object to the parent -->
+            <button class="app-button" @click="$emit('view-employee', employee)">
+                View Details
+            </button>
+
+            <!-- send emp id to parent -->
+            <button class="app-button app-button-danger" @click="$emit('delete-employee', employee.id)">
+                Delete 
+            </button>
+
+        </div>
+
+    </article>
+
+    <section>
+        <h1 class="app-page-title">Dashboard</h1>
+
+        <p class="app-muted">
+            welcome to your employee Management system
+        </p>
+
+
+        <div class="dashboard-grid">
+
+            <article class="dashboard-stat">
+                <h3>Total Employees</h3>
+                <p>{{totalEmployees}}</p>
+            </article>
+
+            <article class="dashboard-stat">
+                <h3>Total Departments</h3>
+                <p>{{ totalDepartments }}</p>
+            </article>
+
+            <article class="dashboard-stat">
+                <h3>Latest Employee</h3>
+                <p>{{ latestEmployee }}</p>
+            </article>
+
+        </div>
+
+        <p class="app-muted">
+            visit the employee page to manage your team.
+        </p>
+
+    </section>
+
+
+
+
+    <section>
+        <h1 class="app-page-title">Employee</h1>
+
+        <p class="app-muted">Search, filter, add, view and delete employee</p>
+
+        <div class="employee-toolbar">
+            <!-- v-model keeps the search input in sync with Vue state -->
+            
+            <input 
+                class="employee-input"
+                type="search"
+                v-model="searchText"
+                placeholder="Search by name, email or possition"
+                aria-label="Search employee"
+            >
+
+            <!-- Department options are generated dynamically -->
+            <select 
+                class="employee-select"
+                v-model="selectedDepartment"
+                aria-label="filter by department"
+            >
+                <option 
+                    v-for="department in departments"
+                    :key="department"
+                    :value="department"
+                >{{department}} </option>
+            </select>
+
+            <button class="add-button" @click="openAddModal">+ Add Employee</button>
+        </div>
+
+        <p v-show="searchText" class="app-muted">
+            Searching for: {{searchText}}
+        </p>
+
+        <p v-if="filteredEmployees.length === 0" class="app-empty">
+            No employee match your search
+        </p>
+
+        <div v-else class="employee-grid">
+            <!-- Reuse EmployeeCard for every employee -->
+                <EmployeeCard
+                    v-for="employee in filteredEmployees"
+                    :key="employee.id"
+                    :employee="employee"
+                    @delete-employee="deleteEmployee"
+                    @view-employee="viewEmployee"
+                />
+        </div>
+
+        <!-- add emp modal -->
+         BaseModal
+
+        <BaseModal
+            v-if="showAddModal"
+            title="add Employee"
+            @close="showAddModal = false"
+        >
+            <!-- Named slot: replace the modal header -->
+             <template #header>
+                <h2>Add New Employee</h2>
+             </template>
+
+             <form class="employee-form" @submit.prevent="submitEmployee">
+                <label>
+                    Full Name
+                    <input v-model="form.name"
+                        type="text"
+                        placeholder="enter employee name"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Email
+                    <input 
+                        v-model="form.email"
+                        type="email"
+                        placeholder="enter employee name"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Department
+                    <select v-model="form.department" required>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Engineering">Engineering</option>
+                    </select>
+                </label>
+
+                <label>
+                    Position
+                    <input 
+                        v-model="form.position"
+                        type="text"
+                        placeholder="enter employee position"
+                        required
+                    >
+                </label>
+
+                <!-- Dynamic class example -->
+                <p 
+                    v-if="formError"
+                    class="employee-error"
+                    :class="{'app-message': !formError}"
+                >{{formError}}</p>
+
+                <!-- Dynamic Style Ex -->
+                 <p
+                    class="app-muted"
+                    :style="{fontSize : '13px'}"
+                 >
+                    All Fields are required...
+                 </p>
+
+                 <!-- Named footer slot: replace the default footer -->
+                <template #footer>
+                    <button
+                        type="button"
+                        class="app-button app-button-secondary"
+                        @click="showAddModal=false"
+                    >
+                        Cancle
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="app-button"
+                    >
+                        Save Emp
+                    </button>
+                </template>
+
+             </form>
+
+        </BaseModal>
+
+        <!-- Employee details modal -->
+        <BaseModal
+            v-if="showDetailsModal && selectedEmployee"
+            title="Employee Details"
+            @close="showDetailsModal=false"
+        >
+            <template #header>
+                <h2>{{selectedEmployee.name}}</h2>
+            </template>
+
+            <p><strong>Email: </strong> {{selectedEmployee.email}}</p>
+            <p><strong>Department: </strong> {{selectedEmployee.department}}</p>
+            <p><strong>Position: </strong>{{selectedEmployee.position}}</p>
+
+            <template #footer>
+                <button 
+                    class="app-button app-button-secondary"
+                    @click="showAddModal = false"
+                >
+                    Close
+                </button>
+            </template>
+
+        </BaseModal>
+
+
+    </section>
+
+
+
+
+    <!-- ____________________________--- -->
+
+
+    <section>
+        <h1 class="app-page-title">About This Project</h1>
+
+        <p>
+            This Employee Management Dashboard is a Vue.js
+            learning project.
+        </p>
+
+        <h3>Technologies Used</h3>
+
+        <ul>
+            <li>Vue.js 3</li>
+            <li>Vue Router 4</li>
+            <li>HTML and CSS</li>
+            <li>JavaScript</li>
+        </ul>
+
+        <p class="app-muted">
+            Practice Project : EMployee data is stored in application memmory and is not save to a database.
+        </p>
+
+    </section>
+
+
+    <!-- ------------------------------- -->
+
+
+    <div class="app-container">
+        <!-- Navigation links are handled by Vue Router -->
+        <header class="app-navbar">
+            <h2 class="app-brand">Employee Manager</h2>
+
+            <nav class="app-nav-links">
+
+                <router-link to="/dashboard">Dashboard</router-link>
+                <router-link to="/employee">Employee</router-link>
+                <router-link to="/about">About</router-link>
+                
+            </nav>
+        </header>
+
+        <main class="app-main">
+
+                <!--
+                    The current route determines which view is displayed.
+                    Props pass shared data to the current view.
+                    Events let a view notify the parent application.
+                -->
+                <router-view v-slot="{ Component }">
+
+                    <component
+                        :is="Component"
+                        :employees="employees"
+                        @add-employee="addEmployee"
+                        @delete-employee="deleteEmployee"
+                    />
+
+                </router-view>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
